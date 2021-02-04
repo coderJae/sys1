@@ -7,8 +7,13 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "ant-design-vue": "^1.7.2",
     "core-js": "^3.6.5",
+    "echarts": "^5.0.1",
+    "js-cookie": "^2.2.1",
     "vue": "^2.6.11",
+    "vue-amap": "^0.5.10",
+    "vue-i18n": "^8.22.4",
     "vue-router": "^3.2.0",
     "vuex": "^3.4.0"
   },
