@@ -24,14 +24,14 @@
             <div class="title">{{ $t('gjgk') }}</div>
             <div style="padding:10px;margin:10px 0;background:rgba(0,0,0,0.5)">
                <div class="crossing">
-                  <div class="select" @click="showOp = !showOp">
+                  <div class="select" @click="showOption">
                      <span>{{ $t('gjbh') }}</span><div>{{current}}</div>
                   </div>
                   <div class="options" v-if="showOp">
                     <div v-for="(item,index) in road" :key="index" :class="[ current == item ? 'on' : '']" @click="pickThis(item)">{{item}}</div>
                   </div>
                   <div class="name">
-                     <span>{{ $t('cycle') }}</span><div>{{min}}{{ $t('min') }}</div>
+                     <span>{{ $t('cycle') }}</span><div>{{min}} {{ $t('min') }}</div>
                   </div>
                </div>
             </div>
@@ -44,6 +44,7 @@
                   <div v-for="(item,index) in list" :key="index">
                       <span>{{item.cId}}</span>
                       <span style="color:#32c5ff">{{item.n}}</span>
+                      <span style="color:#32c5ff">{{item.m}}</span>
                   </div>
                </div>
             </div>
@@ -148,6 +149,12 @@ export default {
         this.current = n
         this.showOp = false
      },
+     showOption(){
+       if(!this.uploaded1 || !this.uploaded2){
+          return
+       }
+       this.showOp = !this.showOp
+     },
      change1(){
        this.$message.success('success')
        this.uploaded1 = true
@@ -157,18 +164,28 @@ export default {
        this.uploaded2 = true
      },
      defaultData(){
-        this.road = [4,18,27]
-        this.current = 4,
-        this.min = 11.3,
-        this.ticks = ['jckbh','xwc']
+        this.road = [20]
+        this.current = 20,
+        this.min = 15.3,
+        this.ticks = ['jckbh','xzxwc','yhxwc']
         this.list = [{
-            cId:1,
-            n:0
-         },
-         {
             cId:2,
-            n:4
+            n:0,
+            m:0
+         },{
+            cId:1,
+            n:4,
+            m:8
+        },{
+            cId:3,
+            n:6,
+            m:20
+        },{
+            cId:6,
+            n:20,
+            m:24
         }]
+        this.$emit('addCrossing',[2,1,3,6])
      }
   },
   mounted(){
@@ -188,6 +205,7 @@ export default {
    font-family: txwhgzb;
    .title{
       height:34px;
+      font-size:18px;
       font-weight:100;
       line-height:34px;
       color:#fff;
@@ -202,8 +220,8 @@ export default {
       margin:5px 0;
       padding:10px;
       .img{
-         width:71px;
-         height:74px;
+         width:56px;
+         height:59px;
          position:relative;
          img{
            width:100%;
@@ -223,16 +241,16 @@ export default {
       }
       .file{
          border:1px dashed #f1f1f1;
-         height:74px;
+         height:59px;
          flex:1;
          margin-left:15px;
          background:#636363;
          color:#fff;
          position: relative;
          img{
-            width:20px;
-            height:20px;
-            margin:15px 0 5px 0;
+            width:15px;
+            height:15px;
+            margin:10px 0 5px 0;
          }
          input{
             position: absolute;
@@ -257,7 +275,7 @@ export default {
      display:flex;
      justify-content:space-between;
      span{
-        width:113px;
+        width:166px;
         text-align:left;
      }
      div{
@@ -298,11 +316,12 @@ export default {
    display:flex;
    height:32px;
    line-height:32px;
-   letter-spacing:2px;
    background:#293036;
    justify-content:space-around;
    span{
       color:#fff;
+      flex:1;
+      text-align: center;
    }
 }
 .xw-wrap{
@@ -314,6 +333,10 @@ export default {
        letter-spacing:2px;
        background:#313638;
        margin:5px 0;
+       span{
+          flex:1;
+          text-align: center;
+       }
    }
 }
 </style>

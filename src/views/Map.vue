@@ -20,7 +20,7 @@
           <span class="color" style="background:#0091ff"></span>{{ $t('status.s2') }}
         </div>
         <div>
-          <span class="color" style="background:#fa4300"></span>{{ $t('status.s3') }}
+          <span class="color" style="background:#b90404"></span>{{ $t('status.s3') }}
         </div>
     </div>
     <router-view/>
@@ -60,14 +60,19 @@ export default {
         Cookies.set('language',l,30)
         if(l == 'en-US'){
            this.en = true
+           document.title = 'Multi-arterial dynamic control system under abnormal conditions'
         }else{
            this.en = false
+           document.title = '非常态条件下复合网络多通道动态智能优化控制系统'
         }
      }
    },
    created(){
      if(Cookies.get('language') == 'en-US'){
          this.en = true
+         document.title = 'Multi-arterial dynamic control system under abnormal conditions'
+     }else{
+         document.title = '非常态条件下复合网络多通道动态智能优化控制系统'
      }
    },
    mounted(){

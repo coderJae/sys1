@@ -11,10 +11,10 @@
                   {{ $t('xhxwsj') }}
                </div>
             </div>
-            <div class="title">{{ $t('xhxwsj') }}</div>
-            <div style="padding:10px;margin:10px 0;background:rgba(0,0,0,0.5)">
+            <div class="title">{{ $t('jckgk') }}</div>
+            <div style="padding:10px;margin:10px 0;background:rgba(0,0,0,0.5);font-size:16px">
                <div class="crossing">
-                  <div class="select" @click="showOp = !showOp">
+                  <div class="select" @click="showOption">
                      <span>{{ $t('no') }}</span><div>{{id}}</div>
                   </div>
                   <div class="options" v-if="showOp">
@@ -25,13 +25,26 @@
                   </div>
                </div>
             </div>
-            <div class="title">{{ $t('xhxw') }}</div>
+            <div class="title">{{ $t('yhqxhxw') }}</div>
             <div style="padding:10px;margin:10px 0;background:rgba(0,0,0,0.5)">
                <div class="ticks-wrap">
                   <span v-for="(item,index) in currentTick" :key="index">{{item}}</span>
+                  <span></span>
                </div>
                <div class="xw-wrap">
                    <img v-for="(item,index) in currentXw" :key="index" :src="require(`./../../assets/xw${item}.png`)"/>
+                   <img v-if="currentXw.length" src="./../../assets/zb.png"/>
+               </div>
+            </div>
+            <div class="title">{{ $t('yhhxhxw') }}</div>
+            <div style="padding:10px;margin:10px 0;background:rgba(0,0,0,0.5)">
+               <div class="ticks-wrap">
+                  <span v-for="(item,index) in beforeTick" :key="index">{{item}}</span>
+                  <span></span>
+               </div>
+               <div class="xw-wrap">
+                   <img v-for="(item,index) in beforeXw" :key="index" :src="require(`./../../assets/xw${item}.png`)"/>
+                   <img v-if="beforeXw.length" src="./../../assets/zb.png"/>
                </div>
             </div>
       </div>
@@ -48,6 +61,8 @@ export default {
         current:'',
         currentTick:[],
         currentXw:[],
+        beforeTick:[],
+        beforeXw:[],
         id:null,
         roads:[
            {
@@ -74,22 +89,27 @@ export default {
         xws:[
            {
               id:1,
+              b_ticks:[0,18,28,44,60],
               ticks:[0,25,40,50,60],
               xw:[2,3,4,1]
            },{
               id:2,
+              b_ticks:[0,27,45,53,63],
               ticks:[0,30,47,55,63],
               xw:[2,3,4,1]
            },{
               id:3,
+              b_ticks:[0,24,33,52,60],
               ticks:[0,20,33,53,60],
               xw:[2,3,4,1]
            },{
               id:4,
+              b_ticks:[0,18,30,48,60],
               ticks:[0,21,35,54,60],
               xw:[2,3,4,1]
            },{
               id:6,
+              b_ticks:[0,30,45,'',''],
               ticks:[0,28,45,'',''],
               xw:[5,6]
            }
@@ -102,6 +122,8 @@ export default {
          if(n == r.id){
             this.currentTick = r.ticks
             this.currentXw = r.xw
+            this.beforeTick = r.b_ticks
+            this.beforeXw = r.xw
          }
        })
        this.$emit('addCrossing',[n])
@@ -110,6 +132,8 @@ export default {
        this.current = 'road.r4'
        this.currentTick = [0,21,35,54,60]
        this.currentXw = [2,3,4,1]
+       this.beforeTick=[0,18,30,48,60]
+       this.beforeXw=[2,3,4,1]
        this.id = 4
      }
   },
@@ -122,6 +146,12 @@ export default {
     change(){
        this.$message.success('success')
        this.uploaded = true
+    },
+    showOption(){
+       if(!this.uploaded){
+          return
+       }
+       this.showOp = !this.showOp
     }
   },
   mounted(){
@@ -141,13 +171,14 @@ export default {
    font-family: txwhgzb;
    .title{
       height:34px;
+      font-size:16px;
       font-weight:100;
       line-height:34px;
       color:#fff;
       text-align:left;
-      text-indent:15px;
+      text-indent:10px;
+      letter-spacing:1px;
       background:#636363;
-      letter-spacing:2px;
    }
    .uploadfile{
       display:flex;
@@ -155,8 +186,8 @@ export default {
       margin:5px 0;
       padding:10px;
       .img{
-         width:71px;
-         height:74px;
+         width:56px;
+         height:59px;
          position:relative;
          img{
            width:100%;
@@ -176,16 +207,16 @@ export default {
       }
       .file{
          border:1px dashed #f1f1f1;
-         height:74px;
+         height:59px;
          flex:1;
          margin-left:15px;
          background:#636363;
          color:#fff;
          position: relative;
          img{
-            width:20px;
-            height:20px;
-            margin:15px 0 5px 0;
+            width:15px;
+            height:15px;
+            margin:10px 0 5px 0;
          }
          input{
             position: absolute;
@@ -209,7 +240,7 @@ export default {
      display:flex;
      justify-content:space-between;
      span{
-        width:40px;
+        width:42px;
         letter-spacing:5px;
         text-align:left;
      }
@@ -227,7 +258,7 @@ export default {
   .options{
     position:absolute;
     left:70px;
-    width:300px;
+    width:320px;
     padding:0 15px;
     background:rgba(0,0,0,0.8);
     div{
@@ -251,7 +282,8 @@ export default {
    display:flex;
    justify-content:space-between;
    span{
-      color:#32c5ff;
+      font-size:16px;
+      color:yellow;
    }
 }
 .xw-wrap{
@@ -259,7 +291,7 @@ export default {
    margin-top:10px;
    img{
       display:block;
-      width:101px;
+      width:83px;
    }
 }
 </style>

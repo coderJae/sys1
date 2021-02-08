@@ -57,7 +57,16 @@ function addMarker(map,list){
             }
         })
 
+        var marker2 = new AMap.Text({
+            text:d.name,
+            position: new AMap.LngLat(d.lnglat[0], d.lnglat[1]),
+            offset: new AMap.Pixel(0, -62)
+        })
+
+        marker2.setStyle({'color':'#7ec2ff','background-color':'rgba(0,0,0,0)','border':'none','font-size':'20px','font-weight':'bold'})
+
         markers.push(marker);
+        markers.push(marker2);
 
     })
 
@@ -134,7 +143,7 @@ function drawRoad(map,road){
         path: road.path,
         borderWeight: 0,
         strokeWeight: 8,
-        strokeColor: ['#03e479','#ffc000','#fa4300'][road.status],
+        strokeColor: ['#03e479','#ffc000','#b90404'][road.status],
         lineJoin: 'round',
         zIndex:999,
         extData:road.name,

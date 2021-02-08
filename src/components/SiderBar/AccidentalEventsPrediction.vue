@@ -14,7 +14,7 @@
             <div class="title">{{ $t('ofsjyc') }}</div>
             <div id="line"></div>
             <div class="detail">
-               <div v-for="item in [0,1,2,3]" :key="item" :class="[!uploaded && item!== 0 ? 'disabled' : '']" @click="detail(item)">{{ $t('detail') }}</div>
+               <div v-for="item in [0,1,2,3]" :key="item" :class="[item === Ind ? 'on':'']" @click="detail(item)">{{ $t('detail') }}</div>
             </div>
       </div>
 </template>
@@ -50,7 +50,8 @@ export default {
      return{
         on:0,
         uploaded:false,
-        myChart:null
+        myChart:null,
+        Ind:0
      }
   },
   watch:{
@@ -63,6 +64,7 @@ export default {
        if(item !== 0 && !this.uploaded){
            return
        }
+       this.Ind = item
        this.$emit('lookDetail',item)
     },
     change(){
@@ -79,22 +81,32 @@ export default {
             },
             xAxis: {
                   type: 'category',
-                  data: ['10:30', '10:45', '11:00', '11:15']
+                  data: ['10:30', '10:45', '11:00', '11:15'],
+                  axisLabel:{
+                     color:'#00ffff'
+                  }
             },
             yAxis: {
+                  
                   type: 'value',
                   minInterval:1,
                   splitLine:{
-                  show:true
+                     show:true
+                  },
+                  axisTick:{
+                     show:false
+                  },
+                  axisLabel:{
+                     show:false
                   }
             },
             series: [{
                   data: d,
                   type: 'line',
                   itemStyle:{
-                  normal:{
-                     color:'#00ffff'
-                  }
+                     normal:{
+                        color:'#00ffff'
+                     }
                   },
                   symbol:'circle',
                   symbolSize:8,
@@ -132,6 +144,7 @@ export default {
    font-family: txwhgzb;
    .title{
       height:34px;
+      font-size:18px;
       font-weight:100;
       line-height:34px;
       color:#fff;
@@ -146,8 +159,8 @@ export default {
       margin:5px 0;
       padding:10px;
       .img{
-         width:71px;
-         height:74px;
+         width:56px;
+         height:59px;
          position:relative;
          img{
            width:100%;
@@ -167,16 +180,16 @@ export default {
       }
       .file{
          border:1px dashed #f1f1f1;
-         height:74px;
+         height:59px;
          flex:1;
          margin-left:15px;
          background:#636363;
          color:#fff;
          position: relative;
          img{
-            width:20px;
-            height:20px;
-            margin:15px 0 5px 0;
+            width:15px;
+            height:15px;
+            margin:10px 0 5px 0;
          }
          input{
             position: absolute;
@@ -196,6 +209,7 @@ export default {
    display:flex;
    background:rgba(0,0,0,0.5);
    padding:15px 0;
+   user-select:none;
    div{
       width:70px;
       height:30px;
@@ -217,8 +231,8 @@ export default {
       &:nth-child(4){
          margin-left:25px;
       }
-      &.disabled{
-         background:linear-gradient(to right, #bfbfbf,#bdbdbd);
+      &.on{
+         background:linear-gradient(to right, #00ffff,#02a1a1);
       }
    }
 }

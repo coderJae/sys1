@@ -26,17 +26,20 @@ t.tssjsj = '特殊事件数据'
 t.ofsjyc = "偶发事件预测"
 t.detail = "详情"
 
-t.xhxwsj = "信号相位数据"
+t.xhxwsj = "现状信号相位配时"
 t.jckgk = "交叉口概况"
-t.xhxw = "信号相位"
+t.yhqxhxw = "优化前信号相位"
+t.yhhxhxw = "优化后信号相位"
 
-t.xhpssj = "信号配时数据"
-t.gjgjsj = "公交轨迹数据"
-t.gjgk = "公交概况"
-t.gjbh = '公交编号'
+
+t.xhpssj = "现状信号配时数据"
+t.gjgjsj = "特殊车辆轨迹数据"
+t.gjgk = "特殊车辆概况"
+t.gjbh = '特殊车辆编号'
 t.xljck = "线路交叉口"
 t.jckbh = "交叉口编号"
-t.xwc = "相位差"
+t.xzxwc = "现状相位差（s）"
+t.yhxwc = "优化相位差（s）"
 
 
 
@@ -49,7 +52,7 @@ t.min = '分钟'
 t.menu = {}
 t.menu.m1 = '偶发事件预测'
 t.menu.m2 = '单点信号优化'
-t.menu.m3 = '干线公交信号协调'
+t.menu.m3 = '干线特殊车辆信号优先'
 
 t.status = {}
 t.status.s1 = '良好路段'

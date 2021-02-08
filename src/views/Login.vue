@@ -5,7 +5,8 @@
             <div @click="changeLanguage('zh-CN')">CN 简体中文</div>
             <div class="l" @click="changeLanguage('en-US')">US English</div>
           </template>
-          <a-icon type="global" class="icon"/>
+          <!-- <a-icon type="global" /> -->
+          <a-button  class="icon" size="mini">语言切换</a-button>
         </a-popover>
         <div class="logo">
             <h1>{{ $t('sysname') }}</h1>
@@ -51,6 +52,9 @@ export default {
     created(){
      if(Cookies.get('language') == 'en-US'){
          this.en = true
+         document.title = 'Multi-arterial dynamic control system under abnormal conditions'
+     }else{
+         document.title = '非常态条件下复合网络多通道动态智能优化控制系统'
      }
    },
     methods:{
@@ -69,9 +73,11 @@ export default {
             this.$i18n.locale = l
             Cookies.set('language',l,30)
             if(l == 'en-US'){
-            this.en = true
+              this.en = true
+              document.title = 'Multi-arterial dynamic control system under abnormal conditions'
             }else{
-            this.en = false
+              this.en = false
+              document.title = '非常态条件下复合网络多通道动态智能优化控制系统'
             }
         }
     }

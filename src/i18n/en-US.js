@@ -25,17 +25,21 @@ t.tssjsj = 'Special Events Data'
 t.ofsjyc = 'accidental Events Prediction'
 t.detail = "Detail"
 
-t.xhxwsj = "Signal Phase Data"
+t.xhxwsj = "Current Signal Phase Data"
 t.jckgk = "Intersection Information"
-t.xhxw = "Signal Phase and Timing"
-t.gjbh = 'No'
-t.xljck = "Arterial Intersection"
+t.yhqxhxw = "Signal Phase and Timing before Optimization"
+t.yhhxhxw = "Signal Phase and Timing after Optimization"
 
-t.xhpssj = "Signal Phase Data"
-t.gjgjsj = "Public Transit Trajectory Data"
-t.gjgk = "Public Transit Information"
+
+
+t.xhpssj = "Current Signal Phase Data"
+t.gjgjsj = "Special Vehicle Trajectory Data"
+t.gjgk = "Special Vehicle Information"
+t.xljck = "Arterial Intersection"
+t.gjbh = 'Special Vehicle No'
 t.jckbh = "Intersection No"
-t.xwc = "Offset"
+t.xzxwc = "Original Offset(s)"
+t.yhxwc = "Optimized Offset(s)"
 
 
 
@@ -49,7 +53,7 @@ t.min = 'Minutes'
 t.menu = {}
 t.menu.m1 = 'Accidental Events prediction'
 t.menu.m2 = 'Isolated Intersection Signal Optimization'
-t.menu.m3 = 'Arterial Public Transit Signal Coordination'
+t.menu.m3 = 'Arterial Special Vehicle Signal Coordination'
 
 t.status = {}
 t.status.s1 = 'Smooth'

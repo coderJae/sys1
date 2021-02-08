@@ -7,7 +7,7 @@
       </div>
       
       <component :is="siderBar" @lookDetail="lookDetail" @addCrossing="addCrossing"></component>
-
+      
       <div id="map"></div>
   </div>
 </template>
@@ -94,6 +94,15 @@ export default {
             viewMode:'3D',
             mapStyle: "amap://styles/cbd2e1aed1ade67712e722499e6fc503"
         });
+
+        map.addControl(new AMap.ControlBar({
+            showZoomBar:false,
+            showControlButton:true,
+            position:{
+               left:'-50px',
+               top:'150px'
+            }
+        }))
         this.map = map
 
         var customLayer = new AMap.CustomLayer(renderMask('map'), {
@@ -108,6 +117,9 @@ export default {
         this.on = i
      },
      lookDetail(e){
+
+        if(!this.map) return
+        
         this.map.clearMap();
         const road = JSON.parse(JSON.stringify(roadData))
         const l = Cookies.get('language') == 'en-US'? true : false
@@ -138,9 +150,13 @@ export default {
 
      },
      addCrossing(e){
+
+         if(!this.map) return
+
          if(this.overlayGroups){
             this.map.remove(this.overlayGroups)
          }
+
          if(e){
             var  cs = JSON.parse(JSON.stringify(crossing))
             
@@ -152,6 +168,7 @@ export default {
                })
             })
          }
+
          this.overlayGroups = new AMap.OverlayGroup(addMarker(this.map,cs || crossing));
          this.map.add(this.overlayGroups);
      }
@@ -162,6 +179,8 @@ export default {
          _this.initMap()
          
          const l = Cookies.get('language') == 'en-US'? true : false
+
+         this.addCrossing()
          
          roadData.forEach(r => {
             searchRoad(r).then(res=>{
