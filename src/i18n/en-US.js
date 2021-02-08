@@ -1,6 +1,7 @@
 const t = {}
 
-t.sysname = 'Multi-arterial dynamic control system under abnormal conditions'
+t.loading = 'Please wait a moment'
+t.sysname = 'Multi-arterial Dynamic Control System under Abnormal Conditions'
 t.btn = 'OK'
 t.hi = 'Hello，welcome'
 t.ask = 'Are you sure you want to logout?'
@@ -22,7 +23,7 @@ t.f2 = 'Map Data'
 
 t.input = 'Data Input'
 t.tssjsj = 'Special Events Data'
-t.ofsjyc = 'accidental Events Prediction'
+t.ofsjyc = 'Accidental Events Prediction'
 t.detail = "Detail"
 
 t.xhxwsj = "Current Signal Phase Data"
@@ -53,7 +54,7 @@ t.min = 'Minutes'
 t.menu = {}
 t.menu.m1 = 'Accidental Events prediction'
 t.menu.m2 = 'Isolated Intersection Signal Optimization'
-t.menu.m3 = 'Arterial Special Vehicle Signal Coordination'
+t.menu.m3 = 'Arterial Special Vehicle Signal Priority'
 
 t.status = {}
 t.status.s1 = 'Smooth'

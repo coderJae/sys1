@@ -1,24 +1,29 @@
 <template>
       <div class="siderBar">
             <div class="title">{{ $t('input') }}</div>
-            <div class="uploadfile">
-               <div class="img" :class="[uploaded1?'on':'']">
-                  <img  src="./../../assets/xhps.png"/>
+            <div style="position:relative">
+               <div class="uploadfile">
+                  <div class="img" :class="[uploaded1?'on':'']">
+                     <img  src="./../../assets/xhps.png"/>
+                  </div>
+                  <div class="file" v-if="!uploaded1">
+                     <input type="file" @change="change1" accept=".csv"/>
+                     <img src="./../../assets/add.png"/><br/>
+                     {{ $t('xhpssj') }}
+                  </div>
                </div>
-               <div class="file" v-if="!uploaded1">
-                  <input type="file" @change="change1" accept=".csv"/>
-                  <img src="./../../assets/add.png"/><br/>
-                  {{ $t('xhpssj') }}
+               <div class="uploadfile">
+                  <div class="img" :class="[uploaded2?'on':'']">
+                     <img  src="./../../assets/gjgj.png"/>
+                  </div>
+                  <div class="file" v-if="!uploaded2">
+                     <input type="file" @change="change2" accept=".csv"/>
+                     <img src="./../../assets/add.png"/><br/>
+                     {{ $t('gjgjsj') }}
+                  </div>
                </div>
-            </div>
-            <div class="uploadfile">
-               <div class="img" :class="[uploaded2?'on':'']">
-                  <img  src="./../../assets/gjgj.png"/>
-               </div>
-               <div class="file" v-if="!uploaded2">
-                  <input type="file" @change="change2" accept=".csv"/>
-                  <img src="./../../assets/add.png"/><br/>
-                  {{ $t('gjgjsj') }}
+               <div v-if="loading" class="loading">
+                   <a-spin :tip="$t('loading')"/>
                </div>
             </div>
             <div class="title">{{ $t('gjgk') }}</div>
@@ -57,6 +62,7 @@ export default {
   name: 'ArterialPublicTransitSignalCoordination',
   data(){
      return{
+        loading:false,
         showOp:false,
         road:[],
         current:null,
@@ -135,12 +141,20 @@ export default {
     },
     uploaded1(n,o){
       if(n && this.uploaded2){
-          this.defaultData()
+          this.loading = true
+          setTimeout(()=>{
+            this.loading = false
+            this.defaultData()
+          },10000)
       }
     },
     uploaded2(n,o){
        if(n && this.uploaded1){
-          this.defaultData()
+          this.loading = true
+          setTimeout(()=>{
+            this.loading = false
+            this.defaultData()
+          },10000)
        }
     }
   },
@@ -213,6 +227,17 @@ export default {
       text-indent:15px;
       background:#636363;
       letter-spacing:2px;
+   }
+   .loading{
+      position:absolute;
+      top:0;
+      left:0;
+      right:0;
+      bottom:0;
+      background: rgba(0,0,0,0.7);
+      z-index:999999;
+      text-align: center;
+      padding-top:50px;
    }
    .uploadfile{
       display:flex;

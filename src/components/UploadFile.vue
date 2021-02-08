@@ -4,7 +4,7 @@
            <div class="title">{{ $t('wel') }}</div>
            <div class="tip">
              <p class="p1">{{ $t('tip') }}</p>
-             <p class="p2">①{{ $t('s1') }}②{{ $t('s2') }}</p>
+             <p class="p2">①{{ $t('s1') }} ②{{ $t('s2') }}</p>
            </div>
            <div class="upload">
               <div class="file file1" :class="[ file1 ? 'on' : '' ]">
@@ -25,6 +25,9 @@
              <div class="light"></div>
            </div>
         </div>
+        <a-spin v-if="loading" class="loading" :tip="$t('loading')">
+          <a-icon slot="indicator" type="loading" style="font-size: 24px" spin />
+        </a-spin>
     </div>
 </template>
 
@@ -35,17 +38,24 @@ export default {
      return{
        showModal:true,
        file1:false,
-       file2:false
+       file2:false,
+       loading:false
      }
   },
   methods:{
     submit(){
-        if(!this.file1 || !this.file2){
+        if(!this.file1 || !this.file2 || this.loading){
           return
         }
-        this.$router.push({
-          path:'./road'
-        })
+        this.loading  = true
+
+        setTimeout(()=>{
+          this.loading = false
+          this.$router.push({
+            path:'./road'
+          })
+        },3000)
+       
      },
      change1(){
         this.$message.success('successs')
@@ -69,6 +79,13 @@ export default {
     bottom:0;
     left:0;
     right:0;
+    .loading{
+      margin-top:353px;
+      position:relative;
+      z-index:999999;
+      letter-spacing:2px;
+      font-size:16px;
+    }
     .body{
         width:1269px;
         height:688px;
@@ -89,12 +106,12 @@ export default {
            color:#fff;
            text-align:left;
            margin:160px 0 0 97px;
-           letter-spacing:5px;
+           letter-spacing:1px;
            .p1{
-             font-size:20px;
+             font-size:24px;
            }
            .p2{
-             font-size:18px;
+             font-size:20px;
            }
         }
         .upload{

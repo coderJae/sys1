@@ -94,6 +94,7 @@ export default {
     }
     .logo{
        padding:200px 0 30px 0;
+       font-family: 'Times New Roman';
        h1{
          font-size:50px;
          font-weight:bold;

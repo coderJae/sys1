@@ -10,6 +10,9 @@
                   <img src="./../../assets/add.png"/><br/>
                   {{ $t('tssjsj') }}
                </div>
+               <div v-if="loading" class="loading">
+                   <a-spin :tip="$t('loading')"/>
+               </div>
             </div>
             <div class="title">{{ $t('ofsjyc') }}</div>
             <div id="line"></div>
@@ -51,7 +54,8 @@ export default {
         on:0,
         uploaded:false,
         myChart:null,
-        Ind:0
+        Ind:0,
+        loading:false
      }
   },
   watch:{
@@ -70,7 +74,11 @@ export default {
     change(){
        this.$message.success('success')
        this.uploaded = true
-       this.initChart([2, 1, 2, 4])
+       this.loading = true
+       setTimeout(()=>{
+          this.loading = false
+          this.initChart([2, 1, 2, 4])
+       },10000)
     },
     initChart(d){
         this.myChart.setOption({
@@ -158,6 +166,18 @@ export default {
       background:rgba(0,0,0,0.5);
       margin:5px 0;
       padding:10px;
+      position: relative;
+      .loading{
+         position:absolute;
+         top:0;
+         left:0;
+         right:0;
+         bottom:0;
+         background: rgba(0,0,0,0.7);
+         z-index:999999;
+         text-align: center;
+         padding-top:20px;
+      }
       .img{
          width:56px;
          height:59px;

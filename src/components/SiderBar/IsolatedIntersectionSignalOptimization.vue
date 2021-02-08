@@ -10,6 +10,9 @@
                   <img src="./../../assets/add.png"/><br/>
                   {{ $t('xhxwsj') }}
                </div>
+               <div v-if="loading" class="loading">
+                   <a-spin :tip="$t('loading')"/>
+               </div>
             </div>
             <div class="title">{{ $t('jckgk') }}</div>
             <div style="padding:10px;margin:10px 0;background:rgba(0,0,0,0.5);font-size:16px">
@@ -56,6 +59,7 @@ export default {
   name: 'IsolatedIntersectionSignalOptimization', //单点信号优化
   data(){
      return{
+        loading:false,
         uploaded:false,
         showOp:false,
         current:'',
@@ -94,8 +98,8 @@ export default {
               xw:[2,3,4,1]
            },{
               id:2,
-              b_ticks:[0,27,45,53,63],
-              ticks:[0,30,47,55,63],
+              b_ticks:[0,27,45,53,60],
+              ticks:[0,30,47,55,60],
               xw:[2,3,4,1]
            },{
               id:3,
@@ -145,7 +149,11 @@ export default {
     },
     change(){
        this.$message.success('success')
-       this.uploaded = true
+       this.loading = true
+       setTimeout(()=>{
+          this.loading = false
+          this.uploaded = true
+       },10000)
     },
     showOption(){
        if(!this.uploaded){
@@ -185,6 +193,18 @@ export default {
       background:rgba(0,0,0,0.5);
       margin:5px 0;
       padding:10px;
+      position: relative;
+      .loading{
+         position:absolute;
+         top:0;
+         left:0;
+         right:0;
+         bottom:0;
+         background: rgba(0,0,0,0.7);
+         z-index:999999;
+         text-align: center;
+         padding-top:20px;
+      }
       .img{
          width:56px;
          height:59px;
