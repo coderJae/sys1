@@ -1,6 +1,7 @@
 const t = {}
 
 t.loading = 'Please wait a moment'
+t.done = 'success'
 t.sysname = 'Multi-arterial Dynamic Control System under Abnormal Conditions'
 t.btn = 'OK'
 t.hi = 'Hello，welcome'

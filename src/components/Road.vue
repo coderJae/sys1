@@ -6,7 +6,7 @@
          <div :class="[ on === 2 ? 'on' : '']" @click="menuTo('ArterialPublicTransitSignalCoordination',2)">{{ $t('menu.m3') }}</div>
       </div>
       
-      <component :is="siderBar" @lookDetail="lookDetail" @addCrossing="addCrossing"></component>
+      <component :is="siderBar" :kk="kk" :mp="mp" @lookDetail="lookDetail" @addCrossing="addCrossing"></component>
       
       <div id="map"></div>
   </div>
@@ -53,35 +53,13 @@ export default {
         map:null,
         on:0,
         siderBar:'AccidentalEventsPrediction',
-        details:[
-           [
-              { r:5,s:2 },
-              { r:11,s:2}
-           ],
-           [
-              { r:2,s:1 },
-              { r:5,s:2 },
-              { r:8,s:1 },
-              { r:11,s:1}
-           ],
-           [
-              { r:2,s:1 },
-              { r:5,s:2 },
-              { r:8,s:1 },
-              { r:10,s:2},
-              { r:11,s:1}
-           ],
-           [
-              { r:1,s:1 },
-              { r:2,s:2 },
-              { r:5,s:2 },
-              { r:6,s:1 },
-              { r:8,s:2 },
-              { r:9,s:1 },
-              { r:10,s:2},
-              { r:11,s:1}
-           ]
-        ],
+        details:{
+           '卡口数据_1.csv':[[{r:5,s:2},{r:11,s:2}],[{r:2,s:1},{r:5,s:2},{r:8,s:1},{r:11,s:1}],[{r:2,s:1},{r:5,s:2},{r:8,s:1},{r:10,s:2},{r:11,s:1}],[{r:1,s:1},{r:2,s:2},{r:5,s:2},{r:6,s:1},{r:8,s:2},{r:9,s:1},{r:10,s:2},{r:11,s:1}]],
+           '卡口数据_2.csv':[[{r:1,s:1},{r:2,s:1},{r:3,s:1},{r:4,s:2},{r:5,s:2},{r:6,s:2},{r:8,s:1},{r:10,s:1},{r:11,s:2}],[{r:1,s:1},{r:2,s:2},{r:3,s:1},{r:4,s:2},{r:5,s:2},{r:6,s:2},{r:8,s:1},{r:10,s:1},{r:11,s:2}],[{r:1,s:1},{r:2,s:2},{r:3,s:1},{r:4,s:2},{r:5,s:2},{r:6,s:2},{r:7,s:1},{r:8,s:2},{r:9,s:1},{r:10,s:2},{r:11,s:2}],[{r:1,s:1},{r:3,s:1},{r:4,s:2},{r:6,s:2},{r:8,s:1},{r:10,s:1},{r:11,s:2}]],
+           '卡口数据_3.csv':[[{r:1,s:1},{r:2,s:1},{r:3,s:1},{r:4,s:2}],[{r:1,s:1},{r:2,s:2},{r:3,s:1},{r:4,s:2},{r:6,s:1},{r:8,s:1},{r:10,s:1}],[{r:1,s:1},{r:2,s:1},{r:4,s:2}],[{r:3,s:1},{r:4,s:1}]],
+        },
+        kk:'',
+        mp:'',
         overlayGroups:null
      }
   },
@@ -117,14 +95,13 @@ export default {
         this.on = i
      },
      lookDetail(e){
-
         if(!this.map) return
-        
         this.map.clearMap();
         const road = JSON.parse(JSON.stringify(roadData))
         const l = Cookies.get('language') == 'en-US'? true : false
         
-        const detail = this.details[e]
+        const detail = this.details[this.kk][e]
+        console.log(detail)
 
         road.forEach(r=>{
             detail.forEach(d=>{
@@ -133,7 +110,7 @@ export default {
                }
             })
         })
-        
+
         road.forEach(r => {
             searchRoad(r).then(res=>{
                   drawRoad(this.map,res)
@@ -174,6 +151,9 @@ export default {
      }
   },
   mounted(){
+      this.kk = this.$route.query.kk
+      this.mp = this.$route.query.mp
+      
       let _this = this
       lazyAMapApiLoaderInstance.load().then(() => {
          _this.initMap()
@@ -182,16 +162,7 @@ export default {
 
          this.addCrossing()
          
-         roadData.forEach(r => {
-            searchRoad(r).then(res=>{
-                drawRoad(this.map,res)
-                if(res.status == 2){
-                  addIcon(this.map,res.path[Math.ceil(res.path.length/2)],l)
-                }
-            }).catch(err=>{
-                console.log(err)
-            })
-         })
+         this.lookDetail(0)
          
       })
 

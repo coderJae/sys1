@@ -43,7 +43,7 @@
             <div class="title">{{ $t('xljck') }}</div>
             <div style="padding:10px;margin:10px 0;background:rgba(0,0,0,0.5)">
                <div class="ticks-wrap">
-                  <span v-for="(item,index) in ticks" :key="index">{{ $t(item) }}</span>
+                  <span v-for="(item,index) in ['jckbh','xzxwc','yhxwc']" :key="index">{{ $t(item) }}</span>
                </div>
                <div class="xw-wrap">
                   <div v-for="(item,index) in list" :key="index">
@@ -57,9 +57,12 @@
 </template>
 
 <script>
-
+function  randomTime(){
+      return Math.floor((Math.random()*5 + 5)*1000)
+}
 export default {
   name: 'ArterialPublicTransitSignalCoordination',
+  props:['kk','mp'],
   data(){
      return{
         loading:false,
@@ -67,85 +70,80 @@ export default {
         road:[],
         current:null,
         min:null,
-        ticks:[],
         list:[],
-        xwc:[
-          {
-             road:4,
-             min:15.3,
-             cross:[
-                {
-                   cId:1,
-                   n:0
-                },
-                 {
-                   cId:2,
-                   n:4
-                }
-             ]
-          },{
-             road:18,
-             min:8.6,
-             cross:[
-                {
-                   cId:2,
-                   n:0
-                },
-                 {
-                   cId:1,
-                   n:30
-                },
-                {
-                   cId:3,
-                   n:54
-                }
-             ]
-          },{
-             road:27,
-             min:11.2,
-             cross:[
-                {
-                   cId:1,
-                   n:0
-                },
-                 {
-                   cId:3,
-                   n:17
-                },
-                {
-                   cId:4,
-                   n:56
-                }
-             ]
-          }
-        ],
+        xwc:{
+           '卡口数据_1.csv':{
+                  road:20,
+                  min:15,
+                  cross:[{
+                        cId:2,
+                        n:0,
+                        m:0
+                     },{
+                        cId:1,
+                        n:4,
+                        m:8
+                     },{
+                        cId:3,
+                        n:6,
+                        m:20
+                     },{
+                        cId:6,
+                        n:20,
+                        m:24
+                     }]
+           },
+           '卡口数据_2.csv':{
+                  road:18,
+                  min:9.3,
+                  cross:[{
+                        cId:1,
+                        n:0,
+                        m:0
+                     },{
+                        cId:3,
+                        n:8,
+                        m:14
+                     },{
+                        cId:4,
+                        n:16,
+                        m:20
+                     },{
+                        cId:6,
+                        n:35,
+                        m:24
+                     }]
+           },
+           '卡口数据_3.csv':{
+                  road:4,
+                  min:10.6,
+                  cross:[{
+                        cId:2,
+                        n:0,
+                        m:0
+                     },{
+                        cId:4,
+                        n:16,
+                        m:7
+                     },{
+                        cId:3,
+                        n:21,
+                        m:16
+                     }]
+           }
+        },
         uploaded1:false,
         uploaded2:false
      }
   },
   watch:{
-    current(n,o){
-       this.xwc.forEach(x=>{
-          if(n == x.road){
-             this.min = x.min
-             this.list = x.cross
-
-             let arr = []
-             x.cross.forEach(c=>{
-                arr.push(c.cId)
-             })
-
-             this.$emit('addCrossing',arr)
-          }
-       })
-    },
     uploaded1(n,o){
       if(n && this.uploaded2){
           this.loading = true
           setTimeout(()=>{
             this.loading = false
-            this.defaultData()
-          },10000)
+            this.match()
+          },randomTime())
       }
     },
     uploaded2(n,o){
@@ -153,8 +151,8 @@ export default {
           this.loading = true
           setTimeout(()=>{
             this.loading = false
-            this.defaultData()
-          },10000)
+            this.match()
+          },randomTime())
        }
     }
   },
@@ -170,36 +168,23 @@ export default {
        this.showOp = !this.showOp
      },
      change1(){
-       this.$message.success('success')
+       this.$message.success(this.$i18n.t('done'))
        this.uploaded1 = true
      },
      change2(){
-       this.$message.success('success')
+       this.$message.success(this.$i18n.t('done'))
        this.uploaded2 = true
      },
-     defaultData(){
-        this.road = [20]
-        this.current = 20,
-        this.min = 15.3,
-        this.ticks = ['jckbh','xzxwc','yhxwc']
-        this.list = [{
-            cId:2,
-            n:0,
-            m:0
-         },{
-            cId:1,
-            n:4,
-            m:8
-        },{
-            cId:3,
-            n:6,
-            m:20
-        },{
-            cId:6,
-            n:20,
-            m:24
-        }]
-        this.$emit('addCrossing',[2,1,3,6])
+     match(){
+      let data = this.xwc[this.kk]
+      
+      this.road = [data.road]
+      this.current = data.road
+      this.min = data.min
+      this.list = data.cross
+
+      this.$emit('addCrossing',data.cross.map(d=>{ return d.cId }))
+
      }
   },
   mounted(){

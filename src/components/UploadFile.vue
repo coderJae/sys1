@@ -7,14 +7,14 @@
              <p class="p2">①{{ $t('s1') }} ②{{ $t('s2') }}</p>
            </div>
            <div class="upload">
-              <div class="file file1" :class="[ file1 ? 'on' : '' ]">
-                <input type="file" @change="change1" accept=".csv"/>
+              <div class="file file1"  :class="[ file1 ? 'on' : '' ]">
+                <input type="file" ref="file1" @change="change1" accept=".csv"/>
                 <img v-if="!file1" src="../assets/lssj.png"/>
                 <img v-else src="../assets/lssj_act.png"/>
                 {{ $t('f1') }}
                </div>
               <div class="file file2" :class="[ file2 ? 'on' : '' ]">
-                 <input type="file" @change="change2" accept=".shp"/>
+                 <input type="file" ref="file2"  @change="change2" accept=".shp"/>
                  <img v-if="!file2" src="../assets/dtsj.png"/>
                  <img v-else src="../assets/dtsj_act.png"/>
                  {{ $t('f2') }}
@@ -32,13 +32,16 @@
 </template>
 
 <script>
+function  randomTime(){
+      return Math.floor((Math.random()*3 + 3)*1000)
+}
 export default {
   name: 'UploadFile',
   data(){
      return{
        showModal:true,
-       file1:false,
-       file2:false,
+       file1:'',
+       file2:'',
        loading:false
      }
   },
@@ -52,18 +55,22 @@ export default {
         setTimeout(()=>{
           this.loading = false
           this.$router.push({
-            path:'./road'
+            path:'./road',
+            query:{
+               kk:this.file1,
+               mp:this.file2
+            }
           })
-        },3000)
+        },randomTime())
        
      },
      change1(){
-        this.$message.success('successs')
-        this.file1 = true
+        this.$message.success(this.$i18n.t('done'))
+        this.file1 = this.$refs.file1.files[0].name
      },
      change2(){
-       this.$message.success('successs')
-       this.file2 = true
+       this.$message.success(this.$i18n.t('done'))
+       this.file2 = this.$refs.file2.files[0].name
      },
   },
   mounted(){

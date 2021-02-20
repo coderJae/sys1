@@ -6,7 +6,7 @@
                   <img  src="./../../assets/tssj.png"/>
                </div>
                <div class="file" v-if="!uploaded">
-                  <input type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" @change="change"/>
+                  <input type="file" ref="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" @change="change"/>
                   <img src="./../../assets/add.png"/><br/>
                   {{ $t('tssjsj') }}
                </div>
@@ -46,21 +46,29 @@ import { color } from 'echarts/core';
 echarts.use(
     [ TitleComponent, TooltipComponent, GridComponent, LineChart, CanvasRenderer]
 );
-
+function  randomTime(){
+      return Math.floor((Math.random()*5 + 5)*1000)
+}
 export default {
   name: 'AccidentalEventsPrediction',
+  props:['kk','mp'],
   data(){
      return{
         on:0,
         uploaded:false,
         myChart:null,
         Ind:0,
-        loading:false
+        loading:false,
+        echartsData:{
+           '卡口数据_1.csv':[2, 1, 2, 4],
+           '卡口数据_2.csv':[4, 5, 7, 3],
+           '卡口数据_3.csv':[1, 2, 1, 0]
+        }
      }
   },
   watch:{
-     uploaded(n,o){
-        
+     kk(n){
+        console.log(n,'run')
      }
   },
   methods:{
@@ -71,14 +79,14 @@ export default {
        this.Ind = item
        this.$emit('lookDetail',item)
     },
-    change(){
-       this.$message.success('success')
+    change(){       
+       this.$message.success(this.$i18n.t('done'))
        this.uploaded = true
        this.loading = true
        setTimeout(()=>{
           this.loading = false
-          this.initChart([2, 1, 2, 4])
-       },10000)
+          this.initChart(this.echartsData[this.kk])
+       },randomTime())
     },
     initChart(d){
         this.myChart.setOption({
@@ -134,10 +142,11 @@ export default {
     // 接下来的使用就跟之前一样，初始化图表，设置配置项
     this.myChart = echarts.init(document.getElementById('line'))
 
-    this.initChart([2])
+    this.initChart([this.echartsData[this.kk][0]])
 
     this.$emit('lookDetail',0)
     this.$emit('addCrossing')
+
   }
 }
 </script>

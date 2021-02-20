@@ -6,7 +6,7 @@
                   <img  src="./../../assets/xhxw.png"/>
                </div>
                <div class="file" v-if="!uploaded">
-                  <input type="file" @change="change" accept="text/xml,application/xml"/>
+                  <input type="file" @change="change" accept=".csv"/>
                   <img src="./../../assets/add.png"/><br/>
                   {{ $t('xhxwsj') }}
                </div>
@@ -28,18 +28,8 @@
                   </div>
                </div>
             </div>
+          
             <div class="title">{{ $t('yhqxhxw') }}</div>
-            <div style="padding:10px;margin:10px 0;background:rgba(0,0,0,0.5)">
-               <div class="ticks-wrap">
-                  <span v-for="(item,index) in currentTick" :key="index">{{item}}</span>
-                  <span></span>
-               </div>
-               <div class="xw-wrap">
-                   <img v-for="(item,index) in currentXw" :key="index" :src="require(`./../../assets/xw${item}.png`)"/>
-                   <img v-if="currentXw.length" src="./../../assets/zb.png"/>
-               </div>
-            </div>
-            <div class="title">{{ $t('yhhxhxw') }}</div>
             <div style="padding:10px;margin:10px 0;background:rgba(0,0,0,0.5)">
                <div class="ticks-wrap">
                   <span v-for="(item,index) in beforeTick" :key="index">{{item}}</span>
@@ -50,13 +40,28 @@
                    <img v-if="beforeXw.length" src="./../../assets/zb.png"/>
                </div>
             </div>
+
+            <div class="title">{{ $t('yhhxhxw') }}</div>
+            <div style="padding:10px;margin:10px 0;background:rgba(0,0,0,0.5)">
+               <div class="ticks-wrap">
+                  <span v-for="(item,index) in currentTick" :key="index">{{item}}</span>
+                  <span></span>
+               </div>
+               <div class="xw-wrap">
+                   <img v-for="(item,index) in currentXw" :key="index" :src="require(`./../../assets/xw${item}.png`)"/>
+                   <img v-if="currentXw.length" src="./../../assets/zb.png"/>
+               </div>
+            </div>
       </div>
 </template>
 
 <script>
-
+function  randomTime(){
+      return Math.floor((Math.random()*5 + 5)*1000)
+}
 export default {
   name: 'IsolatedIntersectionSignalOptimization', //单点信号优化
+  props:['kk','mp'],
   data(){
      return{
         loading:false,
@@ -90,55 +95,97 @@ export default {
               t:'road.r6'
            }
         ],
-        xws:[
-           {
-              id:1,
-              b_ticks:[0,18,28,44,60],
-              ticks:[0,25,40,50,60],
-              xw:[2,3,4,1]
-           },{
-              id:2,
-              b_ticks:[0,27,45,53,60],
-              ticks:[0,30,47,55,60],
-              xw:[2,3,4,1]
-           },{
-              id:3,
-              b_ticks:[0,24,33,52,60],
-              ticks:[0,20,33,53,60],
-              xw:[2,3,4,1]
-           },{
-              id:4,
-              b_ticks:[0,18,30,48,60],
-              ticks:[0,21,35,54,60],
-              xw:[2,3,4,1]
-           },{
-              id:6,
-              b_ticks:[0,30,45,'',''],
-              ticks:[0,28,45,'',''],
-              xw:[5,6]
-           }
-        ]
+        xws:{
+         '卡口数据_1.csv':[{
+                  id:1,
+                  b_ticks:[0,18,28,44,60],
+                  ticks:[0,25,40,50,60],
+                  xw:[2,3,4,1]
+               },{
+                  id:2,
+                  b_ticks:[0,27,45,53,60],
+                  ticks:[0,30,47,55,60],
+                  xw:[2,3,4,1]
+               },{
+                  id:3,
+                  b_ticks:[0,24,33,52,60],
+                  ticks:[0,20,33,53,60],
+                  xw:[2,3,4,1]
+               },{
+                  id:4,
+                  b_ticks:[0,18,30,48,60],
+                  ticks:[0,21,35,54,60],
+                  xw:[2,3,4,1]
+               },{
+                  id:6,
+                  b_ticks:[0,30,45,'',''],
+                  ticks:[0,28,45,'',''],
+                  xw:[5,6]
+               }],
+         '卡口数据_2.csv':[{
+               id:1,
+               b_ticks:[0,21,30,42,60],
+               ticks:[0,22,40,52,60],
+               xw:[2,3,4,1]
+            },{
+               id:2,
+               b_ticks:[0,23,44,53,60],
+               ticks:[0,15,30,43,60],
+               xw:[2,3,4,1]
+            },{
+               id:3,
+               b_ticks:[0,17,26,46,60],
+               ticks:[0,18,25,53,60],
+               xw:[2,3,4,1]
+            },{
+               id:4,
+               b_ticks:[0,22,43,54,60],
+               ticks:[0,21,35,54,60],
+               xw:[2,3,4,1]
+            },{
+               id:6,
+               b_ticks:[0,34,45,'',''],
+               ticks:[0,40,45,'',''],
+               xw:[5,6]
+            }],
+            '卡口数据_3.csv':[{
+               id:1,
+               b_ticks:[0,26,40,50,60],
+               ticks:[0,21,42,52,60],
+               xw:[2,3,4,1]
+            },{
+               id:2,
+               b_ticks:[0,25,41,51,60],
+               ticks:[0,18,40,50,60],
+               xw:[2,3,4,1]
+            },{
+               id:3,
+               b_ticks:[0,17,26,46,60],
+               ticks:[0,19,30,53,60],
+               xw:[2,3,4,1]
+            },{
+               id:4,
+               b_ticks:[0,24,46,54,60],
+               ticks:[0,25,37,54,60],
+               xw:[2,3,4,1]
+            },{
+               id:6,
+               b_ticks:[0,21,45,'',''],
+               ticks:[0,15,45,'',''],
+               xw:[5,6]
+            }]
+        }
      }
   },
   watch:{
      id(n,o){
-       this.xws.forEach(r => {
-         if(n == r.id){
-            this.currentTick = r.ticks
-            this.currentXw = r.xw
-            this.beforeTick = r.b_ticks
-            this.beforeXw = r.xw
-         }
-       })
+       this.match(n)
        this.$emit('addCrossing',[n])
      },
-     uploaded(n,o){
+     uploaded(){
        this.current = 'road.r4'
-       this.currentTick = [0,21,35,54,60]
-       this.currentXw = [2,3,4,1]
-       this.beforeTick=[0,18,30,48,60]
-       this.beforeXw=[2,3,4,1]
        this.id = 4
+       this.match(4)
      }
   },
   methods:{
@@ -147,13 +194,23 @@ export default {
        this.id = item.id
        this.showOp = false
     },
+    match(id){
+        this.xws[this.kk].forEach(r => {
+         if(id == r.id){
+            this.currentTick = r.ticks
+            this.currentXw = r.xw
+            this.beforeTick = r.b_ticks
+            this.beforeXw = r.xw
+         }
+       })
+    },
     change(){
-       this.$message.success('success')
+       this.$message.success(this.$i18n.t('done'))
        this.loading = true
        setTimeout(()=>{
           this.loading = false
           this.uploaded = true
-       },10000)
+       },randomTime())
     },
     showOption(){
        if(!this.uploaded){

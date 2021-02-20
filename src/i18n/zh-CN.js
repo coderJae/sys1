@@ -1,6 +1,7 @@
 const t = {}
 
 t.loading = '请稍等'
+t.done = '成功'
 t.sysname = '非常态条件下复合网络多通道动态智能优化控制系统'
 t.btn = '完成'
 t.hi = '您好，欢迎登陆'
@@ -27,7 +28,7 @@ t.tssjsj = '特殊事件数据'
 t.ofsjyc = "偶发事件预测"
 t.detail = "详情"
 
-t.xhxwsj = "现状信号相位配时"
+t.xhxwsj = "现状信号相位配时数据"
 t.jckgk = "交叉口概况"
 t.yhqxhxw = "优化前信号相位"
 t.yhhxhxw = "优化后信号相位"
