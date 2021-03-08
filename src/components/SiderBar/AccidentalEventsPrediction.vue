@@ -60,15 +60,15 @@ export default {
         Ind:0,
         loading:false,
         echartsData:{
-           '卡口数据_1.csv':[2, 1, 2, 4],
-           '卡口数据_2.csv':[4, 5, 7, 3],
-           '卡口数据_3.csv':[1, 2, 1, 0]
+           '历史轨迹数据_1.csv':[2, 1, 2, 4],
+           '历史轨迹数据_2.csv':[4, 5, 7, 3],
+           '历史轨迹数据_3.csv':[1, 2, 1, 0]
         }
      }
   },
   watch:{
      kk(n){
-        console.log(n,'run')
+        
      }
   },
   methods:{
@@ -139,9 +139,10 @@ export default {
     }
   },
   mounted(){
+           console.log(this.kk,'kk')
     // 接下来的使用就跟之前一样，初始化图表，设置配置项
     this.myChart = echarts.init(document.getElementById('line'))
-
+   
     this.initChart([this.echartsData[this.kk][0]])
 
     this.$emit('lookDetail',0)

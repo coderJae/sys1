@@ -72,7 +72,7 @@ export default {
         min:null,
         list:[],
         xwc:{
-           '卡口数据_1.csv':{
+           '历史轨迹数据_1.csv':{
                   road:20,
                   min:15,
                   cross:[{
@@ -93,7 +93,7 @@ export default {
                         m:24
                      }]
            },
-           '卡口数据_2.csv':{
+           '历史轨迹数据_2.csv':{
                   road:18,
                   min:9.3,
                   cross:[{
@@ -114,7 +114,7 @@ export default {
                         m:24
                      }]
            },
-           '卡口数据_3.csv':{
+           '历史轨迹数据_3.csv':{
                   road:4,
                   min:10.6,
                   cross:[{
